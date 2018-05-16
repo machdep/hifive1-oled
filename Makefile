@@ -40,7 +40,7 @@ ${LDSCRIPT}:
 	sed s#FONT_PATH#${HIFIVE1_FONT}#g ${LDSCRIPT_TPL} > ${LDSCRIPT}
 
 clean:
-	rm -f ${OBJECTS:M*} ${LDSCRIPT} ${APP}.*
+	rm -f ${OBJECTS:M*} ${LDSCRIPT} ${APP}.elf
 
 .include "osfive/mk/user.mk"
 .include "osfive/mk/compile.mk"
