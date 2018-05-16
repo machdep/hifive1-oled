@@ -7,12 +7,12 @@ https://www.aliexpress.com/wholesale?SearchText=128x64+SPI+SSD1306
 
 Connect OLED display to HiFive1 board using this table:
 
-| SSD1306       | HiFive1        |
-| ------------- | -------------- |
-| GND           | GND            |
-| VCC           | 3.3V           |
-| D0 (CLK)      | 13 (SPI1 SCK)  |
-| D1 (MISO)     | 11 (SPI1 MOSI) |
-| RES           | 7              |
-| DC            | 6              |
-| CS            | 10             |
+| SSD1306                 | HiFive1        |
+| ----------------------- | -------------- |
+| GND                     | GND            |
+| VCC                     | 3.3V           |
+| D0 (CLK)                | 13 (SPI1 SCK)  |
+| D1 (MISO)               | 11 (SPI1 MOSI) |
+| RES (Reset)             | 7              |
+| DC (Data or Command)    | 6              |
+| CS (Chip Select)        | 10             |
