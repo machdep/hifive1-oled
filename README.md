@@ -16,3 +16,21 @@ Connect OLED display to HiFive1 board using this table:
 | RES (Reset)             | 7              |
 | DC (Data or Command)    | 6              |
 | CS (Chip Select)        | 10             |
+
+### Build under Linux
+
+    Build 32-bit RV32GC toolchain https://github.com/riscv/riscv-gnu-toolchain
+
+    $ export CROSS_COMPILE=/path/to/riscv32-unknown-linux-gnu-
+    $ git clone --recursive https://github.com/osfive/hifive1-oled
+    $ cd hifive1-oled
+    $ bmake
+
+### Build under FreeBSD
+
+    Build 32-bit RV32GC toolchain (FreeBSD verison) https://github.com/freebsd-riscv/riscv-gnu-toolchain
+
+    $ setenv CROSS_COMPILE /path/to/riscv32-unknown-freebsd12.0-
+    $ git clone --recursive https://github.com/osfive/hifive1-oled
+    $ cd hifive1-oled
+    $ make
