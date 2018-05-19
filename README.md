@@ -34,3 +34,5 @@ Build 32-bit RV32GC toolchain (FreeBSD version): https://github.com/freebsd-risc
     $ git clone --recursive https://github.com/osfive/hifive1-oled
     $ cd hifive1-oled
     $ make
+
+![alt text](https://raw.githubusercontent.com/osfive/hifive1-oled/master/images/hifive1-oled.jpg)
