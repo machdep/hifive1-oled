@@ -35,4 +35,10 @@ Build 32-bit RV32GC toolchain (FreeBSD version): https://github.com/freebsd-risc
     $ cd hifive1-oled
     $ make
 
+### Program
+
+Install openocd from https://github.com/riscv/riscv-openocd
+
+    $ sudo openocd -f board/sifive-hifive1.cfg -c "flash protect 0 64 last off; program hifive1-oled.elf verify; resume 0x20400000; exit"
+
 ![alt text](https://raw.githubusercontent.com/osfive/hifive1-oled/master/images/hifive1-oled.jpg)
