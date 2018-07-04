@@ -20,10 +20,9 @@ OBJECTS =	${APP}.o					\
 		osfive/sys/kern/subr_prf.o			\
 		osfive/sys/kern/subr_console.o			\
 		osfive/lib/libfont/libfont.o			\
-		osfive/lib/libc/stdio/printf.o			\
-		osfive/lib/libc/string/strlen.o			\
-		osfive/lib/libc/string/bzero.o			\
 		start.o
+
+.include "osfive/lib/libc/Makefile.inc"
 
 CFLAGS =	-O -pipe -g -nostdinc -fno-omit-frame-pointer		\
 	-march=rv32g -mabi=ilp32 -fno-builtin-printf			\
