@@ -19,6 +19,7 @@ OBJECTS =	${APP}.o					\
 		osfive/sys/dev/ssd1306/ssd1306.o		\
 		osfive/sys/kern/subr_prf.o			\
 		osfive/sys/kern/subr_console.o			\
+		osfive/sys/kern/kern_panic.o			\
 		osfive/lib/libfont/libfont.o			\
 		start.o
 
