@@ -30,8 +30,7 @@ CFLAGS = -g -nostdinc -march=rv32g -mabi=ilp32	\
 
 CFLAGS += -Wall -Wredundant-decls -Wnested-externs -Wstrict-prototypes		\
 	-Wmissing-prototypes -Wpointer-arith -Winline -Wcast-qual		\
-	-Wundef -Wno-pointer-sign -Wno-format -Wmissing-include-dirs		\
-	-Wno-unknown-pragmas -Werror
+	-Wundef -Wmissing-include-dirs -Werror
 
 all:	compile link
 

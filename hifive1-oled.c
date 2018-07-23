@@ -112,7 +112,7 @@ draw_pixel(void *arg, int x, int y, int pixel)
 }
 
 static void
-draw_text(uint8_t *z)
+draw_text(char *z)
 {
 	struct char_info ci;
 	int i;
@@ -175,7 +175,7 @@ clear_display(void)
 void
 main(void)
 {
-	uint8_t text[16];
+	char text[16];
 	uint16_t c;
 	int i;
 	int g;
