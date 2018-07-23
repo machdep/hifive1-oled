@@ -25,13 +25,12 @@ OBJECTS =	${APP}.o					\
 
 .include "osfive/lib/libc/Makefile.inc"
 
-CFLAGS =	-O -pipe -g -nostdinc -fno-omit-frame-pointer		\
-	-march=rv32g -mabi=ilp32 -fno-builtin-printf			\
-	-fno-optimize-sibling-calls -ffreestanding -fwrapv		\
-	-fdiagnostics-show-option -fms-extensions -finline-limit=8000	\
-	-Wall -Wredundant-decls -Wnested-externs -Wstrict-prototypes	\
-	-Wmissing-prototypes -Wpointer-arith -Winline -Wcast-qual	\
-	-Wundef -Wno-pointer-sign -Wno-format -Wmissing-include-dirs	\
+CFLAGS = -g -nostdinc -march=rv32g -mabi=ilp32	\
+	 -fno-builtin-printf -ffreestanding
+
+CFLAGS += -Wall -Wredundant-decls -Wnested-externs -Wstrict-prototypes		\
+	-Wmissing-prototypes -Wpointer-arith -Winline -Wcast-qual		\
+	-Wundef -Wno-pointer-sign -Wno-format -Wmissing-include-dirs		\
 	-Wno-unknown-pragmas -Werror
 
 all:	compile link
