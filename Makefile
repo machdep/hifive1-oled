@@ -22,8 +22,8 @@ OBJECTS =	${APP}.o					\
 		osfive/sys/kern/kern_panic.o			\
 		start.o
 
-.include "osfive/lib/libc/Makefile.inc"
-.include "osfive/lib/libfont/Makefile.inc"
+.include "osfive/lib/libc/Makefile.bsd.inc"
+.include "osfive/lib/libfont/Makefile.bsd.inc"
 
 CFLAGS = -g -nostdinc -march=rv32g -mabi=ilp32			\
 	-fno-builtin-printf -ffreestanding
@@ -41,6 +41,6 @@ ${LDSCRIPT}:
 clean:
 	rm -f ${OBJECTS:M*} ${LDSCRIPT} ${APP}.elf
 
-.include "osfive/mk/user.mk"
-.include "osfive/mk/compile.mk"
-.include "osfive/mk/link.mk"
+.include "osfive/mk/bsd.user.mk"
+.include "osfive/mk/bsd.compile.mk"
+.include "osfive/mk/bsd.link.mk"
