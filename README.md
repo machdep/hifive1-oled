@@ -17,20 +17,11 @@ Connect OLED display to HiFive1 board using this table:
 | DC (Data or Command)    | 6              |
 | CS (Chip Select)        | 10             |
 
-### Build under Linux
+### Build under Linux or FreeBSD
 
 Build 32-bit RV32GC toolchain: https://github.com/riscv/riscv-gnu-toolchain
 
-    $ export CROSS_COMPILE=/path/to/riscv32-unknown-linux-gnu-
-    $ git clone --recursive https://github.com/osfive/hifive1-oled
-    $ cd hifive1-oled
-    $ bmake
-
-### Build under FreeBSD
-
-Build 32-bit RV32GC toolchain (FreeBSD version): https://github.com/freebsd-riscv/riscv-gnu-toolchain
-
-    $ setenv CROSS_COMPILE /path/to/riscv32-unknown-freebsd12.0-
+    $ export CROSS_COMPILE=/path/to/riscv32-unknown-elf-
     $ git clone --recursive https://github.com/osfive/hifive1-oled
     $ cd hifive1-oled
     $ make
@@ -39,6 +30,6 @@ Build 32-bit RV32GC toolchain (FreeBSD version): https://github.com/freebsd-risc
 
 Install openocd from https://github.com/riscv/riscv-openocd
 
-    $ sudo openocd -f board/sifive-hifive1.cfg -c "flash protect 0 64 last off; program hifive1-oled.elf verify; resume 0x20400000; exit"
+    $ sudo openocd -f board/sifive-hifive1.cfg -c "flash protect 0 64 last off; program obj/hifive1-oled.elf verify; resume 0x20400000; exit"
 
 ![alt text](https://raw.githubusercontent.com/osfive/hifive1-oled/master/images/hifive1-oled.jpg)
