@@ -20,10 +20,10 @@ OBJECTS =	${APP}.o					\
 		osfive/sys/kern/subr_prf.o			\
 		osfive/sys/kern/subr_console.o			\
 		osfive/sys/kern/kern_panic.o			\
-		osfive/lib/libfont/libfont.o			\
 		start.o
 
 .include "osfive/lib/libc/Makefile.inc"
+.include "osfive/lib/libfont/Makefile.inc"
 
 CFLAGS = -g -nostdinc -march=rv32g -mabi=ilp32			\
 	-fno-builtin-printf -ffreestanding
