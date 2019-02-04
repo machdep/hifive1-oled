@@ -24,8 +24,10 @@ OBJECTS =	${APP}.o					\
 		osfive/sys/kern/kern_panic.o			\
 		start.o
 
-include osfive/lib/libc/Makefile.gnu.inc
-include osfive/lib/libfont/Makefile.gnu.inc
+include osfive/lib/libc/Makefile.inc
+include osfive/lib/libfont/Makefile.inc
+
+LIBRARIES = LIBC LIBFONT
 
 CFLAGS = -g -nostdinc -march=rv32g -mabi=ilp32			\
 	-fno-builtin-printf -ffreestanding
