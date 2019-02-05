@@ -24,15 +24,11 @@ OBJECTS =	${APP}.o					\
 		osfive/sys/kern/kern_panic.o			\
 		start.o
 
-include osfive/lib/libc/Makefile.inc
-include osfive/lib/libfont/Makefile.inc
-
 LIBRARIES = LIBC LIBFONT
 
 CFLAGS = -g -nostdinc -march=rv32g -mabi=ilp32			\
-	-fno-builtin-printf -ffreestanding
-
-CFLAGS += -Wall -Wredundant-decls -Wnested-externs		\
+	-fno-builtin-printf -ffreestanding -Wall		\
+	-Wredundant-decls -Wnested-externs			\
 	-Wstrict-prototypes -Wmissing-prototypes		\
 	-Wpointer-arith -Winline -Wcast-qual			\
 	-Wundef -Wmissing-include-dirs -Werror
@@ -45,6 +41,8 @@ ${LDSCRIPT}:
 clean:
 	rm -f ${OBJECTS} ${LDSCRIPT} ${APP}.elf
 
+include osfive/lib/libc/Makefile.inc
+include osfive/lib/libfont/Makefile.inc
 include osfive/mk/gnu.user.mk
 include osfive/mk/gnu.compile.mk
 include osfive/mk/gnu.link.mk
