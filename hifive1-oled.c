@@ -58,6 +58,9 @@ static struct global_data {
 } g_data;
 
 extern uint32_t _sfont;
+extern uint32_t _smem;
+extern uint32_t _sdata;
+extern uint32_t _edata;
 
 /*
  * Data or command:
@@ -172,6 +175,18 @@ clear_display(void)
 		g_data.buffer[i] = 0;
 }
 
+static void
+copy_to_ram(void)
+{
+	uint8_t *dst;
+	uint8_t *src;
+
+	/* Copy sdata to RAM if required */
+	for (src = (uint8_t *)&_smem, dst = (uint8_t *)&_sdata;
+	    dst < (uint8_t *)&_edata; )
+		*dst++ = *src++;
+}
+
 void
 main(void)
 {
@@ -180,6 +195,7 @@ main(void)
 	int i;
 	int g;
 
+	copy_to_ram();
 	e300g_init();
 
 	console_register(uart_putchar, (void *)&uart_sc);

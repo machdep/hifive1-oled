@@ -29,8 +29,11 @@ SECTIONS
 		_efont = ABSOLUTE(.);
 	} > flash
 
+	_smem = ABSOLUTE(.);
 	.sdata : {
+		_sdata = ABSOLUTE(.);
 		*(.sdata)
+		_edata = ABSOLUTE(.);
 	} > sram AT > flash
 
 	.bss : {
