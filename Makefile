@@ -45,3 +45,4 @@ clean:
 .include "osfive/mk/bsd.compile.mk"
 .include "osfive/mk/bsd.link.mk"
 .include "osfive/mk/bsd.binutils.mk"
+.include "osfive/mk/bsd.info.mk"

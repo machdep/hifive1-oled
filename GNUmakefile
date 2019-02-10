@@ -46,3 +46,5 @@ include osfive/lib/libfont/Makefile.inc
 include osfive/mk/gnu.user.mk
 include osfive/mk/gnu.compile.mk
 include osfive/mk/gnu.link.mk
+include osfive/mk/gnu.binutils.mk
+include osfive/mk/gnu.info.mk
