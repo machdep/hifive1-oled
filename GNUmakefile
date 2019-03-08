@@ -33,7 +33,7 @@ CFLAGS = -g -nostdinc -march=rv32g -mabi=ilp32			\
 	-Wpointer-arith -Winline -Wcast-qual			\
 	-Wundef -Wmissing-include-dirs -Werror
 
-all:	compile link
+all:	__compile __link
 
 ${LDSCRIPT}:
 	sed s#FONT_PATH#${HIFIVE1_FONT}#g ${LDSCRIPT_TPL} > ${LDSCRIPT}
@@ -43,8 +43,4 @@ clean:
 
 include osfive/lib/libc/Makefile.inc
 include osfive/lib/libfont/Makefile.inc
-include osfive/mk/gnu.user.mk
-include osfive/mk/gnu.compile.mk
-include osfive/mk/gnu.link.mk
-include osfive/mk/gnu.binutils.mk
-include osfive/mk/gnu.info.mk
+include osfive/mk/gnu.mk
