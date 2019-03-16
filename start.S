@@ -28,6 +28,8 @@
 
 ASM_ENTRY(_start)
 	la	sp, stack_top
+	la	t0, cpu_exception_handler
+	csrw	mtvec, t0
 	j	main
 
 	/* NOT REACHED */

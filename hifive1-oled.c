@@ -28,6 +28,12 @@
 #include <sys/console.h>
 #include <sys/types.h>
 #include <sys/systm.h>
+#include <sys/thread.h>
+#include <sys/malloc.h>
+
+#include <machine/machdep.h>
+#include <machine/cpufunc.h>
+#include <machine/cpuregs.h>
 
 #include <dev/spi/spi.h>
 #include <dev/ssd1306/ssd1306.h>
@@ -44,6 +50,13 @@ static struct uart_softc uart_sc;
 
 spi_device_t spi_dev;
 
+extern uint32_t _smem;
+extern uint32_t _sdata;
+extern uint32_t _edata;
+extern uint32_t _sbss;
+extern uint32_t _ebss;
+extern uint32_t _sfont;
+
 #define	BOARD_OSC_FREQ	32768
 #define	SPI_CS		0
 
@@ -56,11 +69,6 @@ static struct global_data {
 	uint8_t *ptr;
 	struct font_info font;
 } g_data;
-
-extern uint32_t _sfont;
-extern uint32_t _smem;
-extern uint32_t _sdata;
-extern uint32_t _edata;
 
 /*
  * Data or command:
@@ -176,6 +184,19 @@ clear_display(void)
 }
 
 static void
+clear_bss(void)
+{
+	uint8_t *sbss;
+	uint8_t *ebss;
+
+	sbss = (uint8_t *)&_sbss;
+	ebss = (uint8_t *)&_ebss;
+
+	while (sbss < ebss)
+		*sbss++ = 0;
+}
+
+static void
 copy_to_ram(void)
 {
 	uint8_t *dst;
@@ -195,7 +216,10 @@ main(void)
 	int i;
 	int g;
 
+	clear_bss();
 	copy_to_ram();
+	md_init();
+
 	e300g_init();
 
 	console_register(uart_putchar, (void *)&uart_sc);
@@ -204,6 +228,9 @@ main(void)
 	font_init(&g_data.font, (uint8_t *)&_sfont);
 	g_data.font.draw_pixel = draw_pixel;
 	g_data.font.draw_pixel_arg = &g_data;
+
+	malloc_init();
+	malloc_add_region(0x80003000, 0x1000);
 
 	printf("Hello World!\n");
 

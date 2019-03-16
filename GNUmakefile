@@ -12,6 +12,10 @@ LDSCRIPT_TPL =	${CURDIR}/ldscript.tpl
 HIFIVE1_FONT =	${CURDIR}/fonts/ter-124n.ld
 
 OBJECTS =	${APP}.o					\
+		osfive/sys/riscv/riscv/exception.o		\
+		osfive/sys/riscv/riscv/intr.o			\
+		osfive/sys/riscv/riscv/machdep.o		\
+		osfive/sys/riscv/riscv/trap.o			\
 		osfive/sys/riscv/sifive/e300g_aon.o		\
 		osfive/sys/riscv/sifive/e300g_prci.o		\
 		osfive/sys/riscv/sifive/e300g_spi.o		\
@@ -21,12 +25,16 @@ OBJECTS =	${APP}.o					\
 		osfive/sys/dev/ssd1306/ssd1306.o		\
 		osfive/sys/kern/subr_prf.o			\
 		osfive/sys/kern/subr_console.o			\
+		osfive/sys/kern/kern_malloc.o			\
+		osfive/sys/kern/kern_malloc_fl.o		\
 		osfive/sys/kern/kern_panic.o			\
+		osfive/sys/kern/kern_sched.o			\
+		osfive/sys/kern/kern_timeout.o			\
 		start.o
 
 LIBRARIES = LIBC LIBFONT
 
-CFLAGS = -g -nostdinc -march=rv32g -mabi=ilp32			\
+CFLAGS = -g -nostdinc -march=rv32im -mabi=ilp32			\
 	-fno-builtin-printf -ffreestanding -Wall		\
 	-Wredundant-decls -Wnested-externs			\
 	-Wstrict-prototypes -Wmissing-prototypes		\
