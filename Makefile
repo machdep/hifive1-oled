@@ -21,8 +21,9 @@ OBJECTS =	${APP}.o					\
 		osfive/sys/riscv/sifive/e300g_gpio.o		\
 		osfive/sys/riscv/sifive/e300g_uart.o		\
 		osfive/sys/dev/ssd1306/ssd1306.o		\
-		osfive/sys/kern/subr_prf.o			\
 		osfive/sys/kern/subr_console.o			\
+		osfive/sys/kern/subr_prf.o			\
+		osfive/sys/kern/subr_sleep.o			\
 		osfive/sys/kern/kern_malloc.o			\
 		osfive/sys/kern/kern_malloc_fl.o		\
 		osfive/sys/kern/kern_panic.o			\

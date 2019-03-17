@@ -234,6 +234,8 @@ main(void)
 
 	printf("Hello World!\n");
 
+	intr_enable();
+
 	oled_init();
 
 	c = 0;
@@ -263,5 +265,7 @@ main(void)
 
 		if (++c > 999)
 			c = 0;
+
+		jsleep(BOARD_OSC_FREQ);
 	}
 }
