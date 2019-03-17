@@ -266,6 +266,6 @@ main(void)
 		if (++c > 999)
 			c = 0;
 
-		jsleep(BOARD_OSC_FREQ);
+		rsleep(BOARD_OSC_FREQ);
 	}
 }
