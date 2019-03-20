@@ -31,7 +31,6 @@
 #include <sys/thread.h>
 #include <sys/malloc.h>
 
-#include <machine/machdep.h>
 #include <machine/cpufunc.h>
 #include <machine/cpuregs.h>
 
@@ -50,11 +49,6 @@ static struct uart_softc uart_sc;
 
 spi_device_t spi_dev;
 
-extern uint32_t _smem;
-extern uint32_t _sdata;
-extern uint32_t _edata;
-extern uint32_t _sbss;
-extern uint32_t _ebss;
 extern uint32_t _sfont;
 
 #define	BOARD_OSC_FREQ	32768
@@ -183,31 +177,6 @@ clear_display(void)
 		g_data.buffer[i] = 0;
 }
 
-static void
-clear_bss(void)
-{
-	uint8_t *sbss;
-	uint8_t *ebss;
-
-	sbss = (uint8_t *)&_sbss;
-	ebss = (uint8_t *)&_ebss;
-
-	while (sbss < ebss)
-		*sbss++ = 0;
-}
-
-static void
-copy_to_ram(void)
-{
-	uint8_t *dst;
-	uint8_t *src;
-
-	/* Copy sdata to RAM if required */
-	for (src = (uint8_t *)&_smem, dst = (uint8_t *)&_sdata;
-	    dst < (uint8_t *)&_edata; )
-		*dst++ = *src++;
-}
-
 void
 main(void)
 {
@@ -216,8 +185,8 @@ main(void)
 	int i;
 	int g;
 
-	clear_bss();
-	copy_to_ram();
+	zero_bss();
+	relocate_data();
 	md_init();
 
 	e300g_init();

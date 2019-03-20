@@ -25,23 +25,23 @@ SECTIONS
 		*(.rodata)
 
 		. = ALIGN(4);
-		_sfont = ABSOLUTE(.);
+		PROVIDE(_sfont = .);
 		INCLUDE "FONT_PATH";
-		_efont = ABSOLUTE(.);
+		PROVIDE(_efont = .);
 	} > flash
 
-	_smem = ABSOLUTE(.);
+	PROVIDE(_smem = .);
 	.sdata : {
-		_sdata = ABSOLUTE(.);
+		PROVIDE(_sdata = .);
 		*(.sdata)
-		_edata = ABSOLUTE(.);
+		PROVIDE(_edata = .);
 	} > sram AT > flash
 
 	.bss : {
-		_sbss = ABSOLUTE(.);
+		PROVIDE(_sbss = .);
 		*(.bss COMMON)
 		*(.sbss)
-		_ebss = ABSOLUTE(.);
+		PROVIDE(_ebss = .);
 	} > sram
 
 	. = ALIGN(4);
