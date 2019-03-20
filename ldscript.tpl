@@ -25,9 +25,8 @@ SECTIONS
 		*(.rodata)
 
 		. = ALIGN(4);
-		PROVIDE(_sfont = .);
+		PROVIDE(sfont = .);
 		INCLUDE "FONT_PATH";
-		PROVIDE(_efont = .);
 	} > flash
 
 	/* Ensure _smem is associated with the next section */

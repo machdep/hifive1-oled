@@ -49,7 +49,7 @@ static struct uart_softc uart_sc;
 
 spi_device_t spi_dev;
 
-extern uint32_t _sfont;
+extern uint32_t sfont;
 
 #define	BOARD_OSC_FREQ	32768
 #define	SPI_CS		0
@@ -194,7 +194,7 @@ main(void)
 	console_register(uart_putchar, (void *)&uart_sc);
 
 	bzero(&g_data.font, sizeof(struct font_info));
-	font_init(&g_data.font, (uint8_t *)&_sfont);
+	font_init(&g_data.font, (uint8_t *)&sfont);
 	g_data.font.draw_pixel = draw_pixel;
 	g_data.font.draw_pixel_arg = &g_data;
 
