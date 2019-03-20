@@ -30,18 +30,20 @@ SECTIONS
 		PROVIDE(_efont = .);
 	} > flash
 
-	PROVIDE(_smem = .);
+	/* Ensure _smem is associated with the next section */
+	. = .;
+	_smem = ABSOLUTE(.);
 	.sdata : {
-		PROVIDE(_sdata = .);
+		_sdata = ABSOLUTE(.);
 		*(.sdata)
-		PROVIDE(_edata = .);
+		_edata = ABSOLUTE(.);
 	} > sram AT > flash
 
 	.bss : {
-		PROVIDE(_sbss = .);
+		_sbss = ABSOLUTE(.);
 		*(.bss COMMON)
 		*(.sbss)
-		PROVIDE(_ebss = .);
+		_ebss = ABSOLUTE(.);
 	} > sram
 
 	. = ALIGN(4);
