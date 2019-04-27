@@ -1,5 +1,5 @@
 APP =		hifive1-oled
-ARCH =		riscv
+MACHINE =	riscv
 
 CC =		${CROSS_COMPILE}gcc
 LD =		${CROSS_COMPILE}ld
@@ -21,7 +21,8 @@ OBJECTS =	main.o						\
 		osfive/sys/dev/ssd1306/ssd1306.o		\
 		start.o
 
-LIBRARIES = KERN RISCV LIBC LIBFONT
+KERNEL = malloc
+LIBRARIES = libc libfont
 
 CFLAGS = -g -nostdinc -march=rv32im -mabi=ilp32			\
 	-fno-builtin-printf -ffreestanding -Wall		\
@@ -30,15 +31,14 @@ CFLAGS = -g -nostdinc -march=rv32im -mabi=ilp32			\
 	-Wpointer-arith -Winline -Wcast-qual			\
 	-Wundef -Wmissing-include-dirs -Werror
 
-all:	__compile __link
+all:	${OBJDIR}/${APP}.elf
 
 ${LDSCRIPT}:
-	sed s#FONT_PATH#${HIFIVE1_FONT}#g ${LDSCRIPT_TPL} > ${LDSCRIPT}
+	@sed s#FONT_PATH#${HIFIVE1_FONT}#g ${LDSCRIPT_TPL} > ${LDSCRIPT}
 
 clean:
-	rm -f ${OBJECTS} ${LDSCRIPT} ${APP}.elf
+	@rm -f ${OBJECTS} ${LDSCRIPT} ${OBJDIR}/${APP}.elf
 
-include osfive/lib/kern/Makefile.inc
 include osfive/lib/libc/Makefile.inc
 include osfive/lib/libfont/Makefile.inc
-include osfive/mk/gnu.mk
+include osfive/mk/default.mk
