@@ -30,6 +30,19 @@ ASM_ENTRY(_start)
 	la	sp, stack_top
 	la	t0, cpu_exception_handler
 	csrw	mtvec, t0
-	j	main
+
+	/* Clear BSS. */
+	la	t0, _sbss
+	la	t1, _ebss
+1:
+	beq	t0, t1, 2f
+	li	t2, 0
+	sb	t2, 0(t0)
+	addi	t0, t0, 1
+	j	1b
+2:
+
+	li	a0, 0
+	j	md_init
 
 	/* NOT REACHED */

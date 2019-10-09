@@ -181,9 +181,8 @@ int
 app_init(void)
 {
 
-	//zero_bss();
-	//relocate_data();
-	//md_init();
+	/* TODO: relocate data in assembly */
+	/* relocate_data(); */
 
 	e300g_init();
 
@@ -198,8 +197,6 @@ app_init(void)
 	malloc_add_region(0x80003000, 0x1000);
 
 	printf("Hello World!\n");
-
-	intr_enable();
 
 	oled_init();
 
@@ -217,7 +214,7 @@ main(void)
 	c = 0;
 	while (1) {
 		clear_display();
-		sprintf(text, "osfive %d", c);
+		sprintf(text, "mdepx %d", c);
 		draw_text(text);
 
 		oled_dc(&gpio_sc, 0);
