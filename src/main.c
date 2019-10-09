@@ -177,17 +177,13 @@ clear_display(void)
 		g_data.buffer[i] = 0;
 }
 
-void
-main(void)
+int
+app_init(void)
 {
-	char text[16];
-	uint16_t c;
-	int i;
-	int g;
 
-	zero_bss();
-	relocate_data();
-	md_init();
+	//zero_bss();
+	//relocate_data();
+	//md_init();
 
 	e300g_init();
 
@@ -206,6 +202,17 @@ main(void)
 	intr_enable();
 
 	oled_init();
+
+	return (0);
+}
+
+int
+main(void)
+{
+	char text[16];
+	uint16_t c;
+	int g;
+	int i;
 
 	c = 0;
 	while (1) {
@@ -235,6 +242,8 @@ main(void)
 		if (++c > 999)
 			c = 0;
 
-		raw_sleep(BOARD_OSC_FREQ);
+		mdx_tsleep(BOARD_OSC_FREQ);
 	}
+
+	return (0);
 }
