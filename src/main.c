@@ -31,9 +31,6 @@
 #include <sys/thread.h>
 #include <sys/malloc.h>
 
-#include <machine/cpufunc.h>
-#include <machine/cpuregs.h>
-
 #include <dev/spi/spi.h>
 #include <dev/ssd1306/ssd1306.h>
 #include <riscv/sifive/e300g.h>
