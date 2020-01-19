@@ -8,7 +8,7 @@ OBJCOPY =	${CROSS_COMPILE}objcopy
 OBJDIR =	obj
 
 LDSCRIPT =	${OBJDIR}/ldscript
-LDSCRIPT_TPL =	${CURDIR}/ldscript.tpl
+LDSCRIPT_TPL =	${CURDIR}/src/ldscript.tpl
 HIFIVE1_FONT =	${CURDIR}/fonts/ter-124n.ld
 
 export CFLAGS = -g -nostdinc -march=rv32im -mabi=ilp32		\
