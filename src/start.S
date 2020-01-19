@@ -42,6 +42,8 @@ ASM_ENTRY(_start)
 	j	1b
 2:
 
+	/* TODO: relocate data. */
+
 	li	a0, 0
 	j	md_init
 
