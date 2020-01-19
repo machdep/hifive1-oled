@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2018 Ruslan Bukin <br@bsdpad.com>
+ * Copyright (c) 2018-2020 Ruslan Bukin <br@bsdpad.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,16 +40,11 @@
 
 #include <libfont/libfont.h>
 
-static struct clint_softc clint_sc;
-static struct aon_softc aon_sc;
-static struct spi_softc spi_sc;
-static struct prci_softc prci_sc;
-static struct gpio_softc gpio_sc;
-static struct uart_softc uart_sc;
-
-spi_device_t spi_dev;
-
+extern struct spi_softc spi1_sc;
+extern struct gpio_softc gpio_sc;
 extern uint32_t sfont;
+
+static spi_device_t spi_dev;
 
 #define	BOARD_OSC_FREQ	32768
 #define	SPI_CS		0
@@ -83,29 +78,6 @@ oled_cmd(spi_device_t *dev, uint8_t cmd)
 	dev->transfer(dev, &cmd, NULL, 1);
 }
 
-void
-udelay(uint32_t usec)
-{
-
-	clint_udelay(&clint_sc, usec, BOARD_OSC_FREQ);
-}
-
-static void
-uart_putchar(int c, void *arg)
-{
-	struct uart_softc *sc;
-
-	sc = arg;
-
-	if (sc == NULL)
-		return;
-
-	if (c == '\n')
-		e300g_uart_putc(sc, '\r');
-
-	e300g_uart_putc(sc, c);
-}
-
 static void
 draw_pixel(void *arg, int x, int y, int pixel)
 {
@@ -131,31 +103,14 @@ draw_text(char *z)
 }
 
 static void
-e300g_init(void)
-{
-	uint32_t cpu_freq;
-
-	e300g_clint_init(&clint_sc, CLINT_BASE);
-	e300g_aon_init(&aon_sc, AON_BASE);
-	e300g_prci_init(&prci_sc, PRCI_BASE);
-
-	e300g_gpio_init(&gpio_sc, GPIO_BASE);
-	e300g_iof0_enable(&gpio_sc, IOF0_UART0_RX | IOF0_UART0_TX);
-	e300g_iof0_enable(&gpio_sc, IOF0_SPI1_MOSI | IOF0_SPI1_SS0
-	    | IOF0_SPI1_SCK);
-
-	e300g_spi_init(&spi_sc, &spi_dev, SPI1_BASE, SPI_CS);
-
-	cpu_freq = clint_get_cpu_freq(&clint_sc, BOARD_OSC_FREQ);
-	e300g_uart_init(&uart_sc, UART0_BASE, cpu_freq, 115200);
-}
-
-static void
 oled_init(void)
 {
 
+	e300g_iof0_enable(&gpio_sc, IOF0_SPI1_MOSI | IOF0_SPI1_SS0
+	    | IOF0_SPI1_SCK);
 	e300g_gpio_output_enable(&gpio_sc, PIN_DC, 1);
 	e300g_gpio_output_enable(&gpio_sc, PIN_RESET, 1);
+	e300g_spi_setup(&spi1_sc, &spi_dev, SPI_CS);
 
 	/* Reset display */
 	e300g_gpio_port(&gpio_sc, PIN_RESET, 0);
@@ -177,16 +132,15 @@ clear_display(void)
 		g_data.buffer[i] = 0;
 }
 
-void
-board_init(void)
+int
+main(void)
 {
+	char text[16];
+	uint16_t c;
+	int g;
+	int i;
 
-	/* TODO: relocate data in assembly */
-	/* relocate_data(); */
-
-	e300g_init();
-
-	mdx_console_register(uart_putchar, (void *)&uart_sc);
+	printf("Hello World!\n");
 
 	bzero(&g_data.font, sizeof(struct font_info));
 	font_init(&g_data.font, (uint8_t *)&sfont);
@@ -196,18 +150,7 @@ board_init(void)
 	malloc_init();
 	malloc_add_region(0x80003000, 0x1000);
 
-	printf("Hello World!\n");
-
 	oled_init();
-}
-
-int
-main(void)
-{
-	char text[16];
-	uint16_t c;
-	int g;
-	int i;
 
 	c = 0;
 	while (1) {
