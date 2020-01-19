@@ -177,8 +177,8 @@ clear_display(void)
 		g_data.buffer[i] = 0;
 }
 
-int
-app_init(void)
+void
+board_init(void)
 {
 
 	/* TODO: relocate data in assembly */
@@ -186,7 +186,7 @@ app_init(void)
 
 	e300g_init();
 
-	console_register(uart_putchar, (void *)&uart_sc);
+	mdx_console_register(uart_putchar, (void *)&uart_sc);
 
 	bzero(&g_data.font, sizeof(struct font_info));
 	font_init(&g_data.font, (uint8_t *)&sfont);
@@ -199,8 +199,6 @@ app_init(void)
 	printf("Hello World!\n");
 
 	oled_init();
-
-	return (0);
 }
 
 int
@@ -213,6 +211,7 @@ main(void)
 
 	c = 0;
 	while (1) {
+		printf("%d\n", c);
 		clear_display();
 		sprintf(text, "mdepx %d", c);
 		draw_text(text);

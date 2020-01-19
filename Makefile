@@ -18,8 +18,10 @@ export CFLAGS = -g -nostdinc -march=rv32im -mabi=ilp32		\
 	-Wpointer-arith -Winline -Wcast-qual			\
 	-Wundef -Wmissing-include-dirs -Werror
 
+export AFLAGS = ${CFLAGS}
+
 all:	${LDSCRIPT}
-	python3 -B mdepx/tools/emitter.py mdepx.conf
+	@python3 -B mdepx/tools/emitter.py mdepx.conf
 
 ${LDSCRIPT}:
 	@sed s#FONT_PATH#${HIFIVE1_FONT}#g ${LDSCRIPT_TPL} > ${LDSCRIPT}

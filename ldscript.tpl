@@ -5,8 +5,8 @@ ENTRY(_start)
 MEMORY
 {
 	flash (rxai!w) : ORIGIN = 0x20400000, LENGTH = 16M
-	sram (wxa!ri)  : ORIGIN = 0x80000000, LENGTH = 12K
-	sram1 (wxa!ri) : ORIGIN = 0x80003000, LENGTH = 4K /* malloc */
+	sram (wxa!ri)  : ORIGIN = 0x80000000, LENGTH = 15K
+	sram1 (wxa!ri) : ORIGIN = 0x80003c00, LENGTH = 1K /* malloc */
 }
 
 SECTIONS
@@ -44,8 +44,4 @@ SECTIONS
 		*(.sbss)
 		_ebss = ABSOLUTE(.);
 	} > sram
-
-	. = ALIGN(4);
-
-	stack_top = . + 0x1000; /* 4kB of stack memory */
 }

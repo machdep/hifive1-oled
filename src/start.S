@@ -27,7 +27,7 @@
 #include <machine/asm.h>
 
 ASM_ENTRY(_start)
-	la	sp, stack_top
+	la	sp, idle_thread_stack + MDX_THREAD_STACK_SIZE;
 	la	t0, cpu_exception_handler
 	csrw	mtvec, t0
 
