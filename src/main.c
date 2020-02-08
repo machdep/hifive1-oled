@@ -43,8 +43,11 @@ extern uint32_t sfont;
 
 static spi_device_t spi_dev;
 
-#define	BOARD_OSC_FREQ	32768
-#define	SPI_CS		0
+#define	BOARD_OSC_FREQ		32768
+#define	SPI_CS			0
+
+/* Unconnected, test pins. */
+#define	PIN_TEST	21
 
 /* SSD1306 pins */
 #define	PIN_DC		22	/* Data or command */
@@ -107,6 +110,7 @@ oled_init(void)
 	    | IOF0_SPI1_SCK);
 	e300g_gpio_output_enable(&gpio_sc, PIN_DC, 1);
 	e300g_gpio_output_enable(&gpio_sc, PIN_RESET, 1);
+	e300g_gpio_output_enable(&gpio_sc, PIN_TEST, 1);
 	e300g_spi_setup(&spi1_sc, &spi_dev, SPI_CS);
 
 	/* Reset display */
@@ -134,7 +138,7 @@ main(void)
 {
 	char text[16];
 	uint16_t c;
-	int g;
+	int g, z;
 	int i;
 
 	printf("Hello World!\n");
@@ -144,13 +148,25 @@ main(void)
 	g_data.font.draw_pixel = draw_pixel;
 	g_data.font.draw_pixel_arg = &g_data;
 
-	malloc_init();
-	malloc_add_region(0x80003000, 0x1000);
+	/*
+	 * Do not register malloc since we don't have
+	 * any free space in SRAM.
+	 * malloc_init();
+	 * malloc_add_region(0x80003000, 0x1000);
+	 */
 
 	oled_init();
 
+	z = 0;
 	c = 0;
 	while (1) {
+		if (z == 0)
+			z = 1;
+		else
+			z = 0;
+
+		e300g_gpio_port(&gpio_sc, PIN_TEST, z);
+
 		printf("%d\n", c);
 		clear_display();
 		sprintf(text, "mdepx %d", c);
@@ -178,7 +194,7 @@ main(void)
 		if (++c > 999)
 			c = 0;
 
-		mdx_tsleep(BOARD_OSC_FREQ);
+		mdx_usleep(1000000);
 	}
 
 	return (0);
