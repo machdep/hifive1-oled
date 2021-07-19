@@ -11,7 +11,7 @@ LDSCRIPT =	${OBJDIR}/ldscript
 LDSCRIPT_TPL =	${CURDIR}/src/ldscript.tpl
 HIFIVE1_FONT =	${CURDIR}/fonts/ter-124n.ld
 
-export CFLAGS = -g -nostdinc -march=rv32im -mabi=ilp32		\
+export CFLAGS = -g -nostdinc -march=rv32ima -mabi=ilp32		\
 	-fno-builtin-printf -ffreestanding -Wall		\
 	-Wredundant-decls -Wnested-externs			\
 	-Wstrict-prototypes -Wmissing-prototypes		\
