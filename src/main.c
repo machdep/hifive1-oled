@@ -39,9 +39,8 @@
 
 extern struct spi_softc spi1_sc;
 extern struct gpio_softc gpio_sc;
+extern struct mdx_device spi_dev;
 extern uint32_t sfont;
-
-static spi_device_t spi_dev;
 
 #define	BOARD_OSC_FREQ	32768
 #define	SPI_CS		0
@@ -69,10 +68,10 @@ oled_dc(struct gpio_softc *sc, uint8_t value)
 }
 
 static void
-oled_cmd(spi_device_t *dev, uint8_t cmd)
+oled_cmd(mdx_device_t dev, uint8_t cmd)
 {
 
-	dev->transfer(dev, &cmd, NULL, 1);
+	mdx_spi_transfer(dev, &cmd, NULL, 1);
 }
 
 static void
@@ -107,7 +106,7 @@ oled_init(void)
 	    | IOF0_SPI1_SCK);
 	e300g_gpio_output_enable(&gpio_sc, PIN_DC, 1);
 	e300g_gpio_output_enable(&gpio_sc, PIN_RESET, 1);
-	e300g_spi_setup(&spi1_sc, &spi_dev, SPI_CS);
+	e300g_spi_setup(&spi_dev, SPI_CS);
 
 	/* Reset display */
 	e300g_gpio_port(&gpio_sc, PIN_RESET, 0);
@@ -145,7 +144,7 @@ main(void)
 	g_data.font.draw_pixel_arg = &g_data;
 
 	malloc_init();
-	malloc_add_region(0x80003000, 0x1000);
+	malloc_add_region((void *)0x80003000, 0x1000);
 
 	oled_init();
 
